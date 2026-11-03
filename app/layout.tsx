@@ -42,7 +42,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${jakarta.variable} font-sans h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAF9F5] text-[#1E252B] selection:bg-[#C5A059]/25 selection:text-[#0B131F]">
+      <body className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#1E252B] selection:bg-[#C5A059]/25 selection:text-[#0B131F]" suppressHydrationWarning>
         {children}
         <Toaster position="top-right" richColors closeButton />
       </body>

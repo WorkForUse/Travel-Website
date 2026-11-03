@@ -196,3 +196,12 @@
     padding-bottom: 5.5rem;
   }
 }
+
+/* Ensure background notification root containers never introduce layout gaps */
+section[aria-label*="Notifications"],
+section[data-react-aria-top-layer] {
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  height: 0 !important;
+}

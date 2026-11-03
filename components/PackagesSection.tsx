@@ -1,20 +1,17 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { 
-  CheckCircle2, ArrowRight, ShieldCheck, Star, 
-  Sparkles, Calendar, MapPin, Eye, Crown
+  ArrowRight, Star, MapPin, SlidersHorizontal, ChevronDown, Check
 } from "lucide-react";
 import { BookingModal } from "@/components/BookingModal";
 import { DestinationItem } from "@/lib/mock-data";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function PackagesSection() {
   const [selectedPackage, setSelectedPackage] = useState<DestinationItem | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const sectionRef = useRef<HTMLElement>(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const packages: (DestinationItem & {
     fourPillars: { visa: string; flight: string; hotel: string; car: string };
@@ -133,51 +130,74 @@ export function PackagesSection() {
   });
 
   return (
-    <section id="packages" className="py-16 sm:py-24 relative bg-[#FAF8F5]">
+    <section id="packages" className="py-5 sm:py-10 lg:py-10 relative bg-[#FAF8F5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        
+        {/* Section Header & Compact Filter */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 sm:mb-14 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#FFFFFF] text-[#9E7D3B] text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A059]/30 mb-3.5 shadow-sm">
-              <Crown className="size-3 text-[#C5A059]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFFFFF] text-[#9E7D3B] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A059]/30 mb-3.5 shadow-sm">
               <span>All-Inclusive Master Itineraries</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#0F1E36]">
+            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0F1E36]">
               Curated Four-Pillar <span className="italic font-normal text-[#C5A059]">Master Packages</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#6A7382] mt-2 max-w-xl">
+            <p className="text-xs sm:text-sm text-[#6A7382] mt-2 max-w-xl leading-relaxed">
               Harmonizing Visa Expedited Clearance, First Class Flights, 5-Star Hotel Suites, and Exotic Fleets into unified, discounted luxury journeys.
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-[#FFFFFF] p-1.5 rounded-2xl border border-[#E8E2D5] self-start md:self-auto shadow-sm">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setActiveCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeCategory === cat
-                    ? "bg-[#0F1E36] text-[#FAF8F5] shadow-sm"
-                    : "text-[#6A7382] hover:text-[#0F1E36] hover:bg-[#F3EFE6]"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Compact Filter Button */}
+          <div className="relative inline-block self-start lg:self-auto">
+            <button
+              type="button"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className="inline-flex items-center gap-2.5 px-3.5 py-2 bg-[#FFFFFF] border border-[#E8E2D5] rounded-xl text-xs font-bold text-[#0F1E36] shadow-sm hover:border-[#C5A059]/50 transition-all cursor-pointer whitespace-nowrap"
+            >
+              <SlidersHorizontal className="size-3.5 text-[#C5A059]" />
+              <span className="text-[#6A7382] font-normal">Filter:</span>
+              <span className="text-[#0F1E36] font-semibold">{activeCategory}</span>
+              <ChevronDown className={`size-3.5 text-[#6A7382] transition-transform duration-200 ${isFilterOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {/* Dropdown Menu Popup */}
+            {isFilterOpen && (
+              <div className="absolute top-full left-0 mt-2 w-48 z-40 bg-[#FFFFFF] border border-[#E8E2D5] rounded-xl shadow-xl py-1.5 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-[#6A7382] uppercase tracking-wider border-b border-[#E8E2D5] mb-1">
+                  Select Category
+                </div>
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => {
+                      setActiveCategory(cat);
+                      setIsFilterOpen(false);
+                    }}
+                    className={`w-full text-left px-3.5 py-2 text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                      activeCategory === cat
+                        ? "bg-[#0F1E36] text-[#FAF8F5]"
+                        : "text-[#6A7382] hover:bg-[#F3EFE6] hover:text-[#0F1E36]"
+                    }`}
+                  >
+                    <span>{cat}</span>
+                    {activeCategory === cat && <Check className="size-3 text-[#E5C378]" />}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* 2x2 Grid for Balanced Editorial View */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* 2x2 Grid for Desktop/Tablet, 1-col for Mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {filteredPackages.map((pkg) => (
             <div
               key={pkg.id}
-              className="package-card group bg-[#FFFFFF] border border-[#E8E2D5] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:border-[#C5A059]/50 flex flex-col justify-between"
+              className="package-card group bg-[#FFFFFF] border border-[#E8E2D5] rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:border-[#C5A059]/50 flex flex-col justify-between"
             >
               {/* Image banner */}
-              <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-muted">
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-muted shrink-0">
                 <Image
                   src={pkg.image}
                   alt={pkg.title}
@@ -187,53 +207,53 @@ export function PackagesSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0F1E36] via-[#0F1E36]/30 to-transparent" />
 
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#E5C378] text-[#0F1E36] shadow-md">
+                <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-2 z-10">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-[#E5C378] text-[#0F1E36] shadow-md truncate max-w-[60%]">
                     {pkg.badge}
                   </span>
-                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-black/60 text-white backdrop-blur-md border border-white/20">
+                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-black/60 text-white backdrop-blur-md border border-white/20 shrink-0">
                     <Star className="size-3 fill-[#E5C378] text-[#E5C378]" />
                     <span>{pkg.rating}</span>
                     <span className="text-white/60 text-[10px]">({pkg.reviews})</span>
                   </div>
                 </div>
 
-                <div className="absolute bottom-4 left-5 right-5 text-white">
-                  <span className="text-[11px] font-semibold text-[#D1D7E0] uppercase tracking-wider flex items-center gap-1.5 mb-0.5">
-                    <MapPin className="size-3 text-[#E5C378]" />
-                    {pkg.country} • {pkg.duration}
+                <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-5 sm:right-5 text-white">
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-[#D1D7E0] uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                    <MapPin className="size-3 text-[#E5C378] shrink-0" />
+                    <span className="truncate">{pkg.country}</span> • <span className="truncate">{pkg.duration}</span>
                   </span>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold leading-tight text-white group-hover:text-[#E5C378] transition-colors">
+                  <h3 className="font-serif text-lg sm:text-2xl font-bold leading-tight text-white group-hover:text-[#E5C378] transition-colors line-clamp-1">
                     {pkg.title}
                   </h3>
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
-                <p className="text-xs sm:text-sm text-[#485363] leading-relaxed">
+              <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
+                <p className="text-xs sm:text-sm text-[#485363] leading-relaxed line-clamp-2">
                   {pkg.overview}
                 </p>
 
                 {/* 4 Sovereign Pillars Matrix */}
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D5] space-y-2.5">
+                <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FAF8F5] border border-[#E8E2D5] space-y-2.5">
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9E7D3B] block">
                     All-Inclusive Four Pillars:
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div className="flex items-center gap-2 text-[#141A22] font-medium truncate">
+                    <div className="flex items-center gap-2 text-[#141A22] font-medium">
                       <span className="size-5 rounded-md bg-[#FFFFFF] border border-[#C5A059]/30 text-[#0F1E36] text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
                       <span className="truncate">{pkg.fourPillars.visa}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[#141A22] font-medium truncate">
+                    <div className="flex items-center gap-2 text-[#141A22] font-medium">
                       <span className="size-5 rounded-md bg-[#FFFFFF] border border-[#C5A059]/30 text-[#0F1E36] text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
                       <span className="truncate">{pkg.fourPillars.flight}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[#141A22] font-medium truncate">
+                    <div className="flex items-center gap-2 text-[#141A22] font-medium">
                       <span className="size-5 rounded-md bg-[#FFFFFF] border border-[#C5A059]/30 text-[#0F1E36] text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
                       <span className="truncate">{pkg.fourPillars.hotel}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[#141A22] font-medium truncate">
+                    <div className="flex items-center gap-2 text-[#141A22] font-medium">
                       <span className="size-5 rounded-md bg-[#FFFFFF] border border-[#C5A059]/30 text-[#0F1E36] text-[10px] font-bold flex items-center justify-center shrink-0">4</span>
                       <span className="truncate">{pkg.fourPillars.car}</span>
                     </div>
@@ -241,21 +261,21 @@ export function PackagesSection() {
                 </div>
 
                 {/* Pricing & Booking CTA */}
-                <div className="pt-4 border-t border-[#E8E2D5] flex items-center justify-between">
-                  <div>
-                    <span className="text-[11px] text-[#6A7382] block">All-Inclusive Master Rate</span>
-                    <p className="font-serif text-2xl sm:text-3xl font-bold text-[#0F1E36]">
+                <div className="pt-4 border-t border-[#E8E2D5] flex items-center justify-between gap-3">
+                  <div className="shrink-0">
+                    <span className="text-[10px] sm:text-[11px] text-[#6A7382] block">All-Inclusive Master Rate</span>
+                    <p className="font-serif text-base sm:text-2xl font-bold text-[#0F1E36]">
                       ${pkg.priceFrom.toLocaleString()}{" "}
-                      <span className="text-xs font-normal font-sans text-[#6A7382]">/ guest</span>
+                      <span className="text-[10px] sm:text-xs font-normal font-sans text-[#6A7382]">/ guest</span>
                     </p>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setSelectedPackage(pkg)}
-                    className="px-5 py-2.5 rounded-xl bg-[#0F1E36] text-[#FAF8F5] text-xs font-bold tracking-wider uppercase hover:bg-[#1A2E4F] transition-all shadow-md shadow-[#0F1E36]/15 flex items-center gap-1.5 cursor-pointer border border-[#C5A059]/30"
+                    className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-[#0F1E36] text-[#FAF8F5] text-xs font-bold tracking-wider uppercase hover:bg-[#1A2E4F] transition-all shadow-md shadow-[#0F1E36]/15 flex items-center gap-1.5 cursor-pointer border border-[#C5A059]/30 shrink-0"
                   >
-                    <span>Reserve Package</span>
+                    <span>Reserve</span>
                     <ArrowRight className="size-3.5 text-[#E5C378]" />
                   </button>
                 </div>

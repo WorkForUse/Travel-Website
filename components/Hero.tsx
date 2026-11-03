@@ -1,90 +1,316 @@
+// "use client";
+
+// import React, { useEffect } from "react";
+// import Image from "next/image";
+// import { ArrowRight } from "lucide-react";
+// import { SearchEngine } from "@/components/search-engine/index";
+// import BgImage from "@/assets/hero-section-bg.png";
+
+// // Initialize GSAP only on client side
+// const loadGSAP = async () => {
+//   try {
+//     const gsap = await import("gsap");
+//     return gsap.default;
+//   } catch (error) {
+//     console.error("Failed to load GSAP:", error);
+//     return null;
+//   }
+// };
+
+// export function Hero() {
+//   const scrollToSearch = (e: React.MouseEvent<HTMLAnchorElement>) => {
+//     e.preventDefault();
+//     document.querySelector("#search-engine")?.scrollIntoView({
+//       behavior: "smooth",
+//       block: "start",
+//     });
+//   };
+
+//   // GSAP animations for content fade-in effect
+//   useEffect(() => {
+//     const animateHeroContent = async () => {
+//       const gsap = await loadGSAP();
+//       if (!gsap) return;
+
+//       const fadeUpElements = document.querySelectorAll(
+//         ".hero-fade-up"
+//       ) as NodeListOf<HTMLElement>;
+//       const fadeElements = document.querySelectorAll(
+//         ".hero-fade-in"
+//       ) as NodeListOf<HTMLElement>;
+
+//       // Animate top subtitle badge
+//       if (fadeUpElements.length > 0) {
+//         gsap.fromTo(
+//           fadeUpElements[0],
+//           { opacity: 0, y: 30 },
+//           { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+//         );
+//       }
+
+//       // Animate headline
+//       if (fadeUpElements.length > 1) {
+//         gsap.fromTo(
+//           fadeUpElements[1],
+//           { opacity: 0, y: 30 },
+//           { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+//         );
+//       }
+
+//       // Animate paragraph
+//       if (fadeElements.length > 0) {
+//         gsap.fromTo(
+//           fadeElements[0],
+//           { opacity: 0 },
+//           { opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.4 }
+//         );
+//       }
+
+//       // Animate CTA button
+//       if (fadeUpElements.length > 2) {
+//         gsap.fromTo(
+//           fadeUpElements[2],
+//           { opacity: 0, y: 20 },
+//           { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.6 }
+//         );
+//       }
+//     };
+
+//     animateHeroContent();
+//   }, []);
+
+//   return (
+//     <section
+//       className="relative isolate overflow-hidden bg-[#F8F5F0] text-[#12223A]"
+//       id="home"
+//     >
+//       {/* Background Image maintained strictly as requested */}
+//       <div className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[560px] sm:h-[650px] lg:h-[700px]">
+//         <Image
+//           src={BgImage}
+//           alt="Santorini coastline at sunset"
+//           fill
+//           priority
+//           sizes="100vw"
+//           className="object-cover object-[68%_center] sm:object-[center_42%]"
+//         />
+//       </div>
+
+//       {/* Editorial Gradients for clear contrast */}
+//       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[560px] bg-gradient-to-b from-[#FFF9F1]/95 via-[#FFF8F0]/90 to-[#FFF8F0]/25 sm:h-[650px] sm:bg-gradient-to-r sm:from-[#FFF9F1]/90 sm:via-[#FFF8F0]/70 sm:to-transparent lg:h-[700px] lg:via-[#FFF8F0]/50" />
+//       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px] bg-gradient-to-b from-white/10 via-transparent to-[#F8F5F0] sm:h-[760px] lg:h-[800px]" />
+
+//       {/* Main Container - Added pt-24 sm:pt-32 lg:pt-36 to prevent badge hiding under Header */}
+//       <div className="mx-auto max-w-[1440px] px-4 pb-8 pt-24 sm:px-8 sm:pb-14 sm:pt-32 lg:px-12 lg:pt-36">
+        
+//         {/* Content Wrapper */}
+//         <div className="max-w-3xl relative z-10">
+          
+//           {/* Top Subtitle Badge (Fixed Visibility & Aligned properly) */}
+//           <div className="hero-fade-up mb-2 inline-flex items-center gap-2 rounded-full border border-[#C49A4A]/40 bg-white/90 px-4 py-1.5 text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#9E7D3B] shadow-sm backdrop-blur-md">
+//             <span>Bespoke Luxury Travel</span>
+//           </div>
+
+//           {/* Main Headline */}
+//           <h1 className="hero-fade-up mt-2 max-w-3xl font-serif text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-[-0.03em] text-[#102039]">
+//             Journeys Crafted <br />
+//             <span className="font-normal italic text-[#B4883D]">
+//               With Quiet Perfection.
+//             </span>
+//           </h1>
+
+//           {/* Subtitle Description */}
+//           <p className="hero-fade-in mt-4 max-w-[34rem] text-[13px] sm:text-base leading-relaxed text-[#1B2B42] font-medium [text-shadow:0_0_14px_rgba(255,249,241,0.95)]">
+//             Effortless global mobility across four sovereign disciplines:
+//             expedited diplomatic visas, private jet charters, premier hotel
+//             sanctuaries,{" "}
+//             <br className="sm:hidden" />
+//             and executive ground fleets.
+//           </p>
+
+//           {/* CTA Button */}
+//           <a
+//             href="#search-engine"
+//             onClick={scrollToSearch}
+//             className="hero-fade-up mt-6 inline-flex min-h-11 items-center justify-center gap-3 rounded-full bg-[#102039] px-6 py-3.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#102039]/20 transition hover:-translate-y-0.5 hover:bg-[#1B3151] focus:outline-none cursor-pointer"
+//           >
+//             <span>Explore Experiences</span>
+//             <ArrowRight className="size-4 text-[#E1B65E]" />
+//           </a>
+//         </div>
+
+//         {/* Search Engine Section */}
+//         <div
+//           id="search-engine"
+//           className="relative z-10 mx-auto mt-8 max-w-[1240px] sm:mt-12 lg:mt-14"
+//         >
+//           <div className="sm:rounded-[28px] sm:border sm:border-white/80 sm:bg-white/90 sm:p-4 sm:shadow-[0_24px_80px_rgba(35,43,55,0.16)] sm:backdrop-blur-xl lg:p-6">
+//             <SearchEngine />
+//           </div>
+//         </div>
+
+//       </div>
+//     </section>
+//   );
+// }
+
 "use client";
 
-import React from "react";
-import { ArrowUpRight, ShieldCheck, Crown, Sparkles, CheckCircle2, Phone } from "lucide-react";
-import { SearchEngine } from "@/components/SearchEngine";
+import React, { useEffect } from "react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { SearchEngine } from "@/components/search-engine/index";
+import BgImage from "@/assets/hero-section-bg.png";
+
+// Initialize GSAP only on client side
+const loadGSAP = async () => {
+  try {
+    const gsap = await import("gsap");
+    return gsap.default;
+  } catch (error) {
+    console.error("Failed to load GSAP:", error);
+    return null;
+  }
+};
 
 export function Hero() {
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const scrollToSearch = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    document.querySelector("#search-engine")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
-  return (
-    <section className="relative pt-24 pb-8 sm:pt-32 sm:pb-12 overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#F6F1E7] to-[#FAF8F5] border-b border-[#E8E2D5]/60">
-      {/* Luxury Radial Glow Backgrounds */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-tr from-[#C5A059]/12 via-[#E5C378]/18 to-transparent blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-0 right-0 w-[400px] h-[300px] bg-[#C5A059]/8 blur-[100px] rounded-full pointer-events-none -z-10" />
+  // GSAP animations for perfectly synced content fade-in effect
+  useEffect(() => {
+    const animateHeroContent = async () => {
+      const gsap = await loadGSAP();
+      if (!gsap) return;
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Editorial Header Content */}
-        <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-10">
-          {/* Sovereign Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFFFFF] border border-[#C5A059]/40 text-[#0F1E36] text-[10px] sm:text-[11px] font-bold tracking-[0.22em] uppercase mb-4 shadow-sm">
-            <Crown className="size-3.5 text-[#C5A059]" />
-            <span>Diplomatic & Private Aviation Atelier</span>
-            <span className="size-1.5 rounded-full bg-[#C5A059]" />
-            <span className="text-[#9E7D3B]">Bespoke 2026/2027</span>
+      const fadeUpElements = document.querySelectorAll(
+        ".hero-fade-up"
+      ) as NodeListOf<HTMLElement>;
+      const fadeElements = document.querySelectorAll(
+        ".hero-fade-in"
+      ) as NodeListOf<HTMLElement>;
+
+      // Create a master timeline for perfectly synchronized sequence
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      // Animate top subtitle badge
+      if (fadeUpElements.length > 0) {
+        tl.fromTo(
+          fadeUpElements[0],
+          { opacity: 0, y: 25 },
+          { opacity: 1, y: 0, duration: 0.9 }
+        );
+      }
+
+      // Animate headline (slightly overlapped for fluidity)
+      if (fadeUpElements.length > 1) {
+        tl.fromTo(
+          fadeUpElements[1],
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1 },
+          "-=0.5"
+        );
+      }
+
+      // Animate paragraph description
+      if (fadeElements.length > 0) {
+        tl.fromTo(
+          fadeElements[0],
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1 },
+          "-=0.6"
+        );
+      }
+
+      // Animate CTA button
+      if (fadeUpElements.length > 2) {
+        tl.fromTo(
+          fadeUpElements[2],
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8 },
+          "-=0.5"
+        );
+      }
+    };
+
+    animateHeroContent();
+  }, []);
+
+  return (
+    <section
+      className="relative isolate overflow-hidden bg-[#F8F5F0] text-[#12223A]"
+      id="home"
+    >
+      {/* Background Image maintained strictly as requested */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[560px] sm:h-[650px] lg:h-[700px]">
+        <Image
+          src={BgImage}
+          alt="Santorini coastline at sunset"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[68%_center] sm:object-[center_42%]"
+        />
+      </div>
+
+      {/* Editorial Gradients for clear contrast */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[560px] bg-gradient-to-b from-[#FFF9F1]/95 via-[#FFF8F0]/90 to-[#FFF8F0]/25 sm:h-[650px] sm:bg-gradient-to-r sm:from-[#FFF9F1]/90 sm:via-[#FFF8F0]/70 sm:to-transparent lg:h-[700px] lg:via-[#FFF8F0]/50" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px] bg-gradient-to-b from-white/10 via-transparent to-[#F8F5F0] sm:h-[760px] lg:h-[800px]" />
+
+      {/* Main Container */}
+      <div className="mx-auto max-w-[1440px] px-4 pb-8 pt-24 sm:px-8 sm:pb-14 sm:pt-32 lg:px-12 lg:pt-36">
+        
+        {/* Content Wrapper */}
+        <div className="max-w-3xl relative z-10">
+          
+          {/* Top Subtitle Badge (opacity-0 initial state prevents flicker) */}
+          <div className="hero-fade-up opacity-0 mb-2 inline-flex items-center gap-2 rounded-full border border-[#C49A4A]/40 bg-white/90 px-4 py-1.5 text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#9E7D3B] shadow-sm backdrop-blur-md">
+            <span>Bespoke Luxury Travel</span>
           </div>
 
-          {/* Majestic Luxury Title */}
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#0F1E36] mb-4 leading-[1.12]">
-            Journeys Crafted <br className="hidden sm:inline" />
-            <span className="italic font-normal text-[#9F7E3B]">
+          {/* Main Headline */}
+          <h1 className="hero-fade-up opacity-0 mt-2 max-w-3xl font-serif text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-[-0.03em] text-[#102039]">
+            Journeys Crafted <br />
+            <span className="font-normal italic text-[#B4883D]">
               With Quiet Perfection.
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-xs sm:text-sm lg:text-base text-[#485363] font-normal max-w-2xl mx-auto leading-relaxed mb-6">
-            Effortless global mobility across four sovereign disciplines: expedited diplomatic visas, private jet charters, premier hotel sanctuaries, and executive ground fleets.
+          {/* Subtitle Description */}
+          <p className="hero-fade-in opacity-0 mt-4 max-w-[34rem] text-[13px] sm:text-base leading-relaxed text-[#1B2B42] font-medium [text-shadow:0_0_14px_rgba(255,249,241,0.95)]">
+            Effortless global mobility across four sovereign disciplines:
+            expedited diplomatic visas, private jet charters, premier hotel
+            sanctuaries,{" "}
+            <br className="sm:hidden" />
+            and executive ground fleets.
           </p>
 
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold">
-            <a
-              href="#search-engine"
-              onClick={(e) => scrollToSection(e, "#search-engine")}
-              className="px-6 py-3 rounded-xl bg-[#0F1E36] text-[#FAF8F5] font-bold tracking-wider uppercase hover:bg-[#1A2E4F] transition-all shadow-md shadow-[#0F1E36]/15 flex items-center gap-2 border border-[#C5A059]/30 cursor-pointer"
-            >
-              <span>Explore Search & Reserve</span>
-              <ArrowUpRight className="size-4 text-[#E5C378]" />
-            </a>
+          {/* CTA Button */}
+          <a
+            href="#search-engine"
+            onClick={scrollToSearch}
+            className="hero-fade-up opacity-0 mt-6 inline-flex min-h-11 items-center justify-center gap-3 rounded-full bg-[#102039] px-6 py-3.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#102039]/20 transition hover:-translate-y-0.5 hover:bg-[#1B3151] focus:outline-none cursor-pointer"
+          >
+            <span>Explore Experiences</span>
+            <ArrowRight className="size-4 text-[#E1B65E]" />
+          </a>
+        </div>
 
-            <a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, "#contact")}
-              className="px-6 py-3 rounded-xl bg-[#FFFFFF] text-[#0F1E36] hover:bg-[#F3EFE6] transition-all border border-[#C5A059]/40 tracking-wider uppercase flex items-center gap-2 shadow-sm cursor-pointer"
-            >
-              <ShieldCheck className="size-4 text-[#C5A059]" />
-              <span>Request Private Concierge</span>
-            </a>
-          </div>
-
-          {/* Micro Trust Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 pt-5 border-t border-[#E8E2D5]/70 text-[11px] text-[#6A7382]">
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 className="size-3.5 text-[#1E7452]" /> 99.4% Visa Pass Rate
-            </span>
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 className="size-3.5 text-[#1E7452]" /> Direct Tarmac Ramp Access
-            </span>
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 className="size-3.5 text-[#1E7452]" /> Virtuoso Preferred Partner
-            </span>
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 className="size-3.5 text-[#1E7452]" /> Zero-Deductible Supercars
-            </span>
+        {/* Search Engine Section */}
+        <div
+          id="search-engine"
+          className="relative z-10 mx-auto mt-8 max-w-[1240px] sm:mt-12 lg:mt-14"
+        >
+          <div className="sm:rounded-[28px] sm:border sm:border-white/80 sm:bg-white/90 sm:p-4 sm:shadow-[0_24px_80px_rgba(35,43,55,0.16)] sm:backdrop-blur-xl lg:p-6">
+            <SearchEngine />
           </div>
         </div>
 
-        {/* Embedded 4-in-1 Professional Search Engine */}
-        <div className="relative z-20">
-          <SearchEngine />
-        </div>
       </div>
     </section>
   );

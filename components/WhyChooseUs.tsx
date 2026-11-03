@@ -2,8 +2,8 @@
 
 import React from "react";
 import { 
-  ShieldCheck, Award, HeartHandshake, Headphones, Plane, Leaf,
-  ChevronRight, CheckCircle2, Sparkles, Building2, Clock, Globe2
+  ShieldCheck, Award, HeartHandshake, Headphones, Leaf,
+  ChevronRight, CheckCircle2, Building2
 } from "lucide-react";
 
 export function WhyChooseUs() {
@@ -59,12 +59,12 @@ export function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-us" className="py-16 sm:py-24 bg-[#F5F1E8]/60 relative border-t border-b border-[#E8E2D5]/70">
+    <section id="why-us" className="py-5 sm:py-10 bg-[#F5F1E8]/60 relative border-t border-b border-[#E8E2D5]/70">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        
+        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFFFFF] text-[#9E7D3B] text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A059]/30 mb-3.5 shadow-sm">
-            <Sparkles className="size-3 text-[#C5A059]" />
             <span>The AuraVoyage Distinction</span>
           </div>
 
@@ -78,7 +78,7 @@ export function WhyChooseUs() {
           </p>
         </div>
 
-        {/* Feature Grid — 100% rendered with NO opacity:0 locks */}
+        {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
@@ -87,44 +87,45 @@ export function WhyChooseUs() {
                 key={idx}
                 className="group bg-[#FFFFFF] border border-[#E8E2D5] rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-2xl hover:border-[#C5A059]/60 transition-all duration-300 flex flex-col justify-between"
               >
+                {/* Top Content Area */}
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="size-12 rounded-2xl bg-[#F3EFE6] text-[#C5A059] border border-[#C5A059]/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#0F1E36] group-hover:text-[#E5C378] transition-all duration-300 shadow-sm">
+                    <div className="size-12 rounded-2xl bg-[#F3EFE6] text-[#C5A059] border border-[#C5A059]/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#0F1E36] group-hover:text-[#E5C378] transition-all duration-300 shadow-sm shrink-0">
                       <Icon className="size-5.5" />
                     </div>
 
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-[#FAF8F5] text-[#9E7D3B] border border-[#E8E2D5]">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-[#FAF8F5] text-[#9E7D3B] border border-[#E8E2D5] truncate max-w-[55%]">
                       {feature.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-serif font-bold text-xl text-[#0F1E36] mb-2 group-hover:text-[#C5A059] transition-colors">
+                  <h3 className="font-serif font-bold text-lg sm:text-xl text-[#0F1E36] mb-2.5 group-hover:text-[#C5A059] transition-colors line-clamp-1">
                     {feature.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-[#485363] leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#485363] leading-relaxed mb-5 line-clamp-3">
                     {feature.description}
                   </p>
 
-                  {/* Feature bullet list */}
-                  <div className="space-y-1.5 pt-3 border-t border-[#E8E2D5]/70">
+                  <div className="space-y-2 pt-4 border-t border-[#E8E2D5]/70 mb-4">
                     {feature.bulletPoints.map((pt, pIdx) => (
                       <div key={pIdx} className="flex items-center gap-2 text-xs text-[#141A22] font-medium">
-                        <CheckCircle2 className="size-3 text-[#C5A059] shrink-0" />
+                        <CheckCircle2 className="size-3.5 text-[#C5A059] shrink-0" />
                         <span className="truncate">{pt}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-5 mt-5 border-t border-[#E8E2D5] flex items-center justify-between text-xs">
-                  <span className="text-[#1E7452] font-bold">
+                {/* Card Footer */}
+                <div className="pt-4 mt-auto border-t border-[#E8E2D5] flex items-center justify-between text-xs gap-2">
+                  <span className="text-[#1E7452] font-bold truncate">
                     {feature.highlight}
                   </span>
 
                   <a
                     href="#contact"
-                    className="font-bold text-[#0F1E36] hover:text-[#C5A059] flex items-center gap-1 tracking-wider uppercase transition-colors"
+                    className="font-bold text-[#0F1E36] hover:text-[#C5A059] flex items-center gap-1 tracking-wider uppercase transition-colors shrink-0"
                   >
                     <span>Consult Desk</span>
                     <ChevronRight className="size-3.5 text-[#C5A059] group-hover:translate-x-1 transition-transform" />
