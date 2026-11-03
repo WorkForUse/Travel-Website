@@ -3,8 +3,6 @@
 import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { Check, ChevronDown, SlidersHorizontal } from "lucide-react";
 
-/* Shared styling tokens — every field in every form uses these,
-   so heights, padding and label style are always identical. */
 export const fieldBox =
   "block min-w-0 rounded-xl border border-[#E8E2D5] bg-[#FAF8F5] px-3.5 py-2.5 transition-colors focus-within:border-[#C5A059] focus-within:ring-2 focus-within:ring-[#C5A059]/15";
 
@@ -13,11 +11,6 @@ export const labelCls =
 
 export const controlCls =
   "mt-1.5 block w-full min-w-0 bg-transparent text-[13px] sm:text-sm font-semibold text-[#141A22] focus:outline-none";
-
-/* ------------------------------------------------------------------ */
-/* Custom dropdown (drop-in replacement for the native <select>)       */
-/* Usage is unchanged: <SelectField ...><option value="x">Label</option></SelectField> */
-/* ------------------------------------------------------------------ */
 
 interface Option {
   value: string;

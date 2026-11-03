@@ -32,8 +32,6 @@ export function BookingModal({ item, onClose }: BookingModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingRef, setBookingRef] = useState("");
 
-  if (!item || typeof document === "undefined") return null;
-
   // Reset form state when item changes (new booking selection)
   React.useEffect(() => {
     setStep("form");
@@ -45,6 +43,9 @@ export function BookingModal({ item, onClose }: BookingModalProps) {
     setIsSubmitting(false);
     setBookingRef("");
   }, [item]);
+
+  if (!item) return null;
+  if (typeof document === "undefined") return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

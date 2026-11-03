@@ -6,7 +6,7 @@ import {
   MapPin, Star, Calendar, ArrowRight, Check, X, SlidersHorizontal, ChevronDown 
 } from "lucide-react";
 import { MOCK_DESTINATIONS, DestinationItem } from "@/lib/mock-data";
-import { BookingModal } from "@/components/BookingModal";
+import { BookingModal } from "@/components/search-engine/BookingModal";
 
 export function DestinationsSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");

@@ -10,7 +10,7 @@ import {
 import { 
   MOCK_FLIGHTS, MOCK_HOTELS, MOCK_CARS, MOCK_VISAS 
 } from "@/lib/mock-data";
-import { BookingModal, BookingTarget } from "@/components/BookingModal";
+import { BookingModal, BookingTarget } from "@/components/search-engine/BookingModal";
 import { toast } from "sonner";
 
 import { SearchTabs } from "./SearchTabs";

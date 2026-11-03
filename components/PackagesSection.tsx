@@ -5,7 +5,7 @@ import Image from "next/image";
 import { 
   ArrowRight, Star, MapPin, SlidersHorizontal, ChevronDown, Check
 } from "lucide-react";
-import { BookingModal } from "@/components/BookingModal";
+import { BookingModal } from "@/components/search-engine/BookingModal";
 import { DestinationItem } from "@/lib/mock-data";
 
 export function PackagesSection() {
