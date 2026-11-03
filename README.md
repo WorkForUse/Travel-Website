@@ -309,7 +309,7 @@ vercel --prod
 
 ---
 
-## 👥 Team
+## STACK
 - Frontend Development: React + Next.js
 - Design System: Shadcn UI + Tailwind CSS
 - Animations: GSAP
